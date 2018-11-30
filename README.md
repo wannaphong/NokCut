@@ -1,6 +1,8 @@
 # NokCut
 Thai Word Segmentation using TCC + Bidirectional RNNs
 
+Colab Notebook : https://colab.research.google.com/drive/1WS08VsjlZGAmCGsoI7AlRm-Do3zo-b-g
+
 Train in BEST I Corpus Training set. (90% training , 10% test)
 ```
 loss: 0.017879242024514966
