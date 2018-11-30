@@ -21,3 +21,6 @@ Precision: 122271.00000/126387.00000 = 96.74333
 
 Number of incorrect : 3579.00000 words
 ```
+
+Mr. Wannaphong Phatthiyaphaibun
+wannaphong@kkumail.com
