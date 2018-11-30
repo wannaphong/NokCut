@@ -1,20 +1,19 @@
 #-*- coding: utf-8 -*-
+import pickle
+import os
+import nokcut
+import re
 import torch as T
 import torch.nn as N
 import torch.optim as O
-
-from tqdm import tqdm    # Nice progressbar
-import random
-device = T.device("cuda:0" if T.cuda.is_available() else "cpu")
-from glob import glob
-import re
 from pythainlp.tokenize.tcc import tcc
-import pickle
-import pickle
-filehandler = open("subword2idx.lab6", 'rb')
+device = T.device("cuda:0" if T.cuda.is_available() else "cpu")
+
+templates_dir = os.path.join(os.path.dirname(nokcut.__file__))
+filehandler = open(os.path.join(templates_dir,"subword2idx.lab6"), 'rb')
 subword2idx = pickle.load(filehandler)
 filehandler.close()
-filehandler = open("idx2subword.lab6", 'rb')
+filehandler = open(os.path.join(templates_dir,"idx2subword.lab6"), 'rb')
 idx2subword = pickle.load(filehandler)
 filehandler.close()
 
@@ -56,7 +55,7 @@ def cut(word):
 
 wordseg_model2 = WordsegModel(dim_charvec=300, dim_trans=64*2, no_layers=2)
 wordseg_model2.to(device)
-wordseg_model2.load_state_dict(T.load("lab6.ep6.loss-0.017879242024514966-f198.47012481095481.model"))
+wordseg_model2.load_state_dict(T.load(os.path.join(templates_dir,"nok1.model")))
 def str2idxseq(seq):
     idxseq = []
     for char in cut(seq):
@@ -87,4 +86,7 @@ def tokenize(charseq):
         else:
             ss+=temp[i]
         
-    return ss.split("|-|")
+    ss=ss.split("|-|")
+    if ss[len(ss)-1] =='':
+        del ss[len(ss)-1]
+    return ss

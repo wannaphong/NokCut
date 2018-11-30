@@ -19,7 +19,7 @@ setup(
     url="https://github.com/wannaphongcom/NokCut/",
     packages=find_packages(),
     python_requires=">=3.5",
-    package_data={},
+    package_data={"nokcut":["idx2subword.lab6","nok1.model","subword2idx.lab6"]},
     include_package_data=True,
     install_requires=requirements,
     license="Apache Software License 2.0",
