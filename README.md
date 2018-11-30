@@ -7,6 +7,7 @@ Colab Notebook : https://colab.research.google.com/drive/1WS08VsjlZGAmCGsoI7AlRm
 
 Train by BEST I Corpus Training set. (90% training , 10% test)
 ```
+ep 6
 loss: 0.017879242024514966
 f1 : 98.47012481095481
 ```
