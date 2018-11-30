@@ -1,5 +1,5 @@
 # NokCut
-Thai Word Segmentation using TCC + Bidirectional RNNs
+Thai Word Segmentation using TCC + Bidirectional RNNs (PyTorch)
 
 Credit code from [A Beginner's Guide to Deep NLP with PyTorch - Dr. Prachya Boonkwan](https://tinyurl.com/y7vwlvur)
 
