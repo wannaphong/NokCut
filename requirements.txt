@@ -1,2 +1,1 @@
 pythainlp>=1.7
-torch
