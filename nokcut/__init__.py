@@ -20,7 +20,6 @@ filehandler.close()
 no_subword=3195
 
 class WordsegModel(N.Module):
-    
     def __init__(self, dim_charvec, dim_trans, no_layers):
         super(WordsegModel, self).__init__()
         self._dim_charvec = dim_charvec
@@ -35,21 +34,14 @@ class WordsegModel(N.Module):
         self._tanh = N.Tanh().to(device)
         self._hidden = N.Linear(2 * self._dim_trans, 2).to(device)    # Predicting two classes: break / no break
         self._log_softmax = N.LogSoftmax(dim=1).to(device)
-        
     def forward(self, charidxs):
-        try:
-            charvecs = self._charemb(T.LongTensor(charidxs).to(device))
-            # print('charvecs =\n{}'.format(charvecs))
-            ctxvecs, lasthids = self._rnn(charvecs.unsqueeze(0))
-            ctxvecs, lasthids = ctxvecs.squeeze(0), lasthids.squeeze(1)
-            # print('ctxvecs =\n{}'.format(ctxvecs))
-            statevecs = self._hidden(self._tanh(ctxvecs))
-            # print('statevecs =\n{}'.format(statevecs))
-            brkvecs = self._log_softmax(statevecs)
-            # print('brkvecs =\n{}'.format(brkvecs))
-            return brkvecs
-        except RuntimeError:
-            raise RuntimeError(statevecs)
+        charvecs = self._charemb(T.LongTensor(charidxs).to(device))
+        ctxvecs, lasthids = self._rnn(charvecs.unsqueeze(0))
+        ctxvecs, lasthids = ctxvecs.squeeze(0), lasthids.squeeze(1)
+        statevecs = self._hidden(self._tanh(ctxvecs))
+        brkvecs = self._log_softmax(statevecs)
+        return brkvecs
+
 def cut(word):
     return tcc(word, sep="ii/ii").split('ii/ii')
 
@@ -68,25 +60,18 @@ def str2idxseq(seq):
 
 def tokenize(charseq):
     charidxs = str2idxseq(charseq)
-    pred_brkvecs = wordseg_model2(charidxs).to(device)
+    pred_brkvecs = wordseg_model2(charidxs)
     pred_wordbrks = []
     for i in range(len(charidxs)):
         pred_wordbrk = (pred_brkvecs[i][0] > pred_brkvecs[i][1])
-        #print(pred_wordbrk)
         pred_wordbrks.append(pred_wordbrk)
-    
-    sent = []
-    word = []
-    begpos = 0
     temp=cut(charseq)
     ss=""
     for i in range(len(pred_wordbrks)):
-        if pred_wordbrks[i]==1:
+        if pred_wordbrks[i]==1 and i!=len(pred_wordbrks)-1:
             ss+=temp[i]+"|-|"
         else:
             ss+=temp[i]
         
     ss=ss.split("|-|")
-    if ss[len(ss)-1] =='':
-        del ss[len(ss)-1]
     return ss
