@@ -26,13 +26,13 @@ class WordsegModel(N.Module):
         self._dim_trans = dim_trans
         self._no_layers = no_layers
         
-        self._charemb = nn.DataParallel(N.Embedding(no_subword, self._dim_charvec).to(device))
-        self._rnn = nn.DataParallel(N.GRU(
+        self._charemb = N.DataParallel(N.Embedding(no_subword, self._dim_charvec).to(device))
+        self._rnn = N.DataParallel(N.GRU(
             self._dim_charvec, self._dim_trans, self._no_layers,
             batch_first=True, bidirectional=True
         ).to(device))
         self._tanh = N.Tanh().to(device)
-        self._hidden = nn.DataParallel(N.Linear(2 * self._dim_trans, 2).to(device))    # Predicting two classes: break / no break
+        self._hidden = N.DataParallel(N.Linear(2 * self._dim_trans, 2).to(device))    # Predicting two classes: break / no break
         self._log_softmax = N.LogSoftmax(dim=1).to(device)
     def forward(self, charidxs):
         charvecs = self._charemb(T.LongTensor(charidxs).to(device))
