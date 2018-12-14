@@ -5,7 +5,7 @@ Credit code from [A Beginner's Guide to Deep NLP with PyTorch - Dr. Prachya Boon
 
 Colab Notebook : https://colab.research.google.com/drive/1WS08VsjlZGAmCGsoI7AlRm-Do3zo-b-g
 
-Install
+## Install
 ```
 pip install nokcut
 ```
