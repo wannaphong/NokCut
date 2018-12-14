@@ -5,6 +5,11 @@ Credit code from [A Beginner's Guide to Deep NLP with PyTorch - Dr. Prachya Boon
 
 Colab Notebook : https://colab.research.google.com/drive/1WS08VsjlZGAmCGsoI7AlRm-Do3zo-b-g
 
+Install
+```
+pip install nokcut
+```
+
 Train by BEST I Corpus Training set. (90% training , 10% test)
 ```
 ep 6
