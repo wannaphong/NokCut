@@ -45,7 +45,7 @@ class WordsegModel(N.Module):
 def cut(word):
     return tcc(word, sep="ii/ii").split('ii/ii')
 
-wordseg_model2 = WordsegModel(dim_charvec=300, dim_trans=64*2, no_layers=2)
+wordseg_model2 = WordsegModel(dim_charvec=300, dim_trans=128, no_layers=2)
 wordseg_model2.to(device)
 wordseg_model2.load_state_dict(T.load(os.path.join(templates_dir,"nok1.model")))
 def str2idxseq(seq):
